@@ -1,7 +1,4 @@
-Clean The Room
-Fix The Laptop
-Clean The Room
-Go Out
-Watch Rcb Lose
-master python
-Hello Python
+Clean the room
+Will RCB win?
+Fix the laptop
+
