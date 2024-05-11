@@ -28,12 +28,13 @@ window = sg.Window("My To-Do App",
                    layout=layout,
                    font=("Helvetica", 20))
 while True:
-    event, values = window.read(timeout=200)
-    window["clock"].update(value= time.strftime("%b %d, %Y %H:%S"))
+    event, values = window.read(timeout=190)
 
-    # print(1, event)
-    # print(2, values)
-    # print(3, values["todos"])
+
+    if event == sg.WINDOW_CLOSED or event == "Exit":
+        break
+    else:
+        window["clock"].update(value=time.strftime("%b %d, %Y %H:%S"))
 
     match event:
         case "Add":
