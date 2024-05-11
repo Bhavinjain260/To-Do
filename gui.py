@@ -4,23 +4,30 @@ import FreeSimpleGUI as sg
 label = sg.Text(" Type in a to-do")
 input_box = sg.InputText(tooltip="Enter a todo", key="todo")
 add_button = sg.Button("Add")
+refreshButton = sg.Button("Refresh")
+completeButton = sg.Button("complete", key= "complete")
+exitButton = sg.Button("Exit", key= "exit")
 
 list_box = sg.Listbox(values= functions.get_todo(),
                       key="todos",
                       enable_events= True,
+
                       size= [45,10])
 
 edit_button = sg.Button("Edit")
+layout = [[label], [input_box, add_button, refreshButton], [list_box, edit_button, completeButton], [exitButton]]
+
+
 
 
 window = sg.Window("My To-Do App",
-                   layout=[[label], [input_box, add_button], [list_box, edit_button]],
+                   layout=layout,
                    font=("Helvetica", 20))
 while True:
     event, values = window.read()
-    print(1, event)
-    print(2, values)
-    print(3, values["todos"])
+    # print(1, event)
+    # print(2, values)
+    # print(3, values["todos"])
 
     match event:
         case "Add":
@@ -30,8 +37,6 @@ while True:
             functions.write_todo(todos)
 
             window["todos"].update(values=todos)
-
-
 
         case "Edit":
             todo_to_edit = values["todos"][0]
@@ -44,6 +49,23 @@ while True:
             window["todos"].update(values=todos)
         case "todos":
             window["todo"].update(value = values["todos"][0])
+
+        case "complete":
+            todo_to_remove = values["todos"][0]
+            todos = functions.get_todo()
+            todos.remove(todo_to_remove)
+            functions.write_todo(todos)
+            window["todos"].update(values=todos)
+            window["todo"].update(value="")
+
+        case "Refresh":
+            todos = functions.get_todo()
+            window["todos"].update(values=todos)
+
+        case "todos":
+             window["todo"].update(value=values["todos"][0])
+        case "exit":
+            break
 
 
         case sg.WIN_CLOSED:
